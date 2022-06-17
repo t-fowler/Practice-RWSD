@@ -1,3 +1,5 @@
+package src.main.java;
+
 
 /**
  * This project is an implementation of the practice project from chapter 2 of

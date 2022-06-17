@@ -1,3 +1,5 @@
+package src.main.java;
+
 import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,7 +13,7 @@ import java.time.Month;
  */
 public class BankStatementAnalyzer
 {
-    private static final String RESOURCES = "../resources/";
+    private static final String RESOURCES = "src/main/resources/";
     
     private void collectSummary(BankStatementProcessor processor)
     {
