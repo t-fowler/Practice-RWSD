@@ -3,6 +3,7 @@ package src.main.java;
 import java.util.List;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Write a description of class BankStatementProcessor here.
@@ -70,8 +71,25 @@ public class BankStatementProcessor
     
     public List<BankTransaction> topTenExpenditures()
     {
-        System.out.println("topTenExpenditures not yet implemented.");
-        return new ArrayList<>();
+        List<BankTransaction> result = new ArrayList<>();
+        final int size = bankTransactions.size();
+        BankTransaction t;
+        
+        Collections.sort(bankTransactions);
+
+        if (bankTransactions.size() < 10) {
+            for (int i = 0; i < size; i++) {
+                if ((t = bankTransactions.get(i)).getAmount() >= 0.0d) break;
+                result.add(t);
+            }
+        } else {
+            for (int i = 0; i <= 10; i++) {
+                if ((t = bankTransactions.get(i)).getAmount() >= 0.0d) break;
+                result.add(t);
+            }
+        }
+        
+        return result;
     }
     
     public BankTransaction highestExpenseCategory()

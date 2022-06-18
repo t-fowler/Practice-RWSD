@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface BankStatementParser
 {
-    public BankTransaction parseFrom(String line);
-    public List<BankTransaction> parseLinesFrom(List<String> lines);
+    public BankTransaction parseFrom(final String line);
+    public List<BankTransaction> parseLinesFrom(final List<String> lines);
 }
