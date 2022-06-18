@@ -92,9 +92,14 @@ public class BankStatementProcessor
         return result;
     }
     
-    public BankTransaction highestExpenseCategory()
+    public String highestExpenseCategory()
     {
-        System.out.println("highestExpenseCategory not yet implemented.");
-        return bankTransactions.get(0);
+        Collections.sort(bankTransactions);
+        
+        if (bankTransactions.size() == 0 || bankTransactions.get(0).getAmount() >= 0.0d) {
+            return null;
+        }
+        
+        return bankTransactions.get(0).getPartner();
     }
 }

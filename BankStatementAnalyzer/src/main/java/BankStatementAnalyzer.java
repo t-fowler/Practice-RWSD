@@ -29,11 +29,20 @@ public class BankStatementAnalyzer
         System.out.println("The number of transactions in January is "
             + processor.countTransactionsInMonth(Month.JANUARY));
         
-        System.out.println("The top ten expenditures are "
-            + processor.topTenExpenditures());
+        List<BankTransaction> top10Expenditures = processor.topTenExpenditures();
+        String highestExpenseCategory = processor.highestExpenseCategory();
+            
+        if (top10Expenditures.isEmpty() || highestExpenseCategory == null) {
+            System.out.println("There are no expenditures on this statement.");
+        } else {
+            System.out.println("The top ten expenditures are "
+                + processor.topTenExpenditures());
         
-        System.out.println("The highest expense category is "
-            + processor.highestExpenseCategory());
+            System.out.println("The highest expense category is "
+                + processor.highestExpenseCategory());
+        }
+        
+        
     }
     
     public void analyze(final String filename, final BankStatementParser parser) throws java.io.IOException
