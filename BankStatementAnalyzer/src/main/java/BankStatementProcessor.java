@@ -140,4 +140,23 @@ public class BankStatementProcessor
         
         return bankTransactions.get(0).getDescription();
     }
+    
+    /**
+     * Finds all the transactions that pass the test provided by filter.
+     * 
+     * @param filter The condition to test transactions against.
+     * @return A list of all transactions that pass the filter.
+     */
+    public List<BankTransaction> findTransactions(final BankTransactionFilter filter)
+    {
+        List<BankTransaction> result = new ArrayList<>();
+        
+        for (BankTransaction transaction : bankTransactions) {
+            if (filter.test(transaction)) {
+                result.add(transaction);
+            }
+        }
+        
+        return result;
+    }
 }
