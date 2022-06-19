@@ -2,13 +2,23 @@ package src.main.java;
 
 import java.util.List;
 /**
- * Write a description of interface BankStatementParser here.
+ * An interface providing the functionality to parse a bank statement.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Tyler Fowler
  */
 public interface BankStatementParser
 {
+    /**
+     * Extracts the pieces of data from a single transaction and creates the BankTransaction.
+     * 
+     * @param line A single transaction in the format of the implementation.
+     */
     public BankTransaction parseFrom(final String line);
+    
+    /**
+     * Parses each transaction in turn, returning a list of BankTransactions.
+     * 
+     * @param lines A list of strings to be parsed according to the format of the implementation.
+     */
     public List<BankTransaction> parseLinesFrom(final List<String> lines);
 }

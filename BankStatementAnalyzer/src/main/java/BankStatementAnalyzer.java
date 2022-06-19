@@ -6,8 +6,8 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.time.Month;
 /**
- * Receives a list of BankTransactions and provides computation results
- * for queries defined in the class.
+ * Reads the given file, the format of which must be consistent with what is expected by the given parser.
+ * Summarizes the results of the queries made by the BankStatementProcessor.
  *
  * @author Tyler Fowler
  */
@@ -45,6 +45,10 @@ public class BankStatementAnalyzer
         
     }
     
+    /**
+     * Uses the parser parameter with the data from the given file, passing the list of transactions to the BankStatementProcessor.
+     * Then collects the results from the queries performed by the processor and prints them to stdout.
+     */
     public void analyze(final String filename, final BankStatementParser parser) throws java.io.IOException
     {   
         collectSummary(new BankStatementProcessor(

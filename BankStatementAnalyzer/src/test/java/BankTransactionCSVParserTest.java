@@ -9,11 +9,17 @@ import java.util.List;
 
 import src.main.java.*;
 
+/**
+ * Test class for the CSV bank statement parser.
+ */
 public class BankTransactionCSVParserTest {
 
     private static double DELTA = 1e-7;
     private BankStatementParser statementParser = new BankStatementCSVParser();
 
+    /**
+     * Tests parseFrom on a single transaction.
+     */
     @Test
     public void shouldParseOneCorrectLine() throws Exception {
         String line = "30-01-2017,-50,Tesco";
@@ -26,6 +32,9 @@ public class BankTransactionCSVParserTest {
         Assert.assertEquals(expected.getDescription(), result.getDescription());
     }
 
+    /**
+     * Tests parseLinesFrom on a list of transactions.
+     */
     @Test
     public void shouldParseCorrectLines() throws Exception
     {
@@ -54,10 +63,13 @@ public class BankTransactionCSVParserTest {
             BankTransaction e = expected.get(i), r = result.get(i);
             Assert.assertEquals(e.getDate(), r.getDate());
             Assert.assertEquals(e.getAmount(), r.getAmount(), 0.0d);
-            Assert.assertEquals(e.getPartner(), r.getPartner());
+            Assert.assertEquals(e.getDescription(), r.getDescription());
         }
     }
 
+    /**
+     * Tests parseLinesFrom on an empty list of transactions.
+     */
     @Test
     public void shouldParseNoLines() throws Exception
     {

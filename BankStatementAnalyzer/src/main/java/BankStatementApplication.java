@@ -18,9 +18,5 @@ public class BankStatementApplication
         final BankStatementParser bankStatementParser = new BankStatementCSVParser();
         
         bankStatementAnalyzer.analyze(args[0], bankStatementParser);
-        // Read input.
-        // Parse input.
-        // Process input.
-        // Summarize results.
     }
 }

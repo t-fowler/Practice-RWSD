@@ -6,10 +6,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Write a description of class BankStatementParser here.
+ * Implements the BankStatementParser for CSV formatted bank statements. The CSV files are one line per transaction,
+ * and the parts of each transaction are delimited by the ',' character.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Tyler Fowler
  */
 public class BankStatementCSVParser implements BankStatementParser
 {
