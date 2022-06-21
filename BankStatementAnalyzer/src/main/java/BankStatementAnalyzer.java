@@ -32,15 +32,20 @@ public class BankStatementAnalyzer
         List<BankTransaction> top10Expenditures = processor.topTenExpenditures();
         String highestExpenseCategory = processor.highestExpenseCategory();
             
-        if (top10Expenditures.isEmpty() || highestExpenseCategory == null) {
+        if (top10Expenditures.isEmpty()) {
             System.out.println("There are no expenditures on this statement.");
         } else {
             System.out.println("The top ten expenditures are "
                 + processor.topTenExpenditures());
+        }
         
+        if (highestExpenseCategory == null) {
+            System.out.println("There are no expenditures on this statement.");
+        } else {
             System.out.println("The highest expense category is "
                 + processor.highestExpenseCategory());
         }
+        
         
         
     }
