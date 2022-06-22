@@ -22,6 +22,7 @@ public class BankStatementProcessor
     public BankStatementProcessor(List<BankTransaction> bankTransactions)
     {
         this.bankTransactions = bankTransactions;
+        Collections.sort(bankTransactions);
     }
     
     /**
@@ -98,6 +99,44 @@ public class BankStatementProcessor
     }
     
     /**
+     * Returns the number of transactions in the statement.
+     * 
+     * @return The number of transactions in the statement.
+     */
+    public int numberOfTransactions()
+    {
+        return bankTransactions.size();
+    }
+    
+    /**
+     * Returns the transaction with the largest amount (may still be negative).
+     * 
+     * @return The transaction with of the largest amount.
+     */
+    public BankTransaction maxTransaction()
+    {
+        if (bankTransactions.size() == 0) {
+            return null;
+        }
+        
+        return bankTransactions.get(bankTransactions.size() - 1);
+    }
+    
+    /**
+     * Returns the transaction with the smallest amount (may still be positive).
+     * 
+     * @return The transaction with the smallest amount.
+     */
+    public BankTransaction minTransaction()
+    {
+        if (bankTransactions.size() == 0) {
+            return null;
+        }
+        
+        return bankTransactions.get(0);
+    }
+    
+    /**
      * Finds the top ten expenditures in the bank statement.
      * 
      * @return A list of the top 10 transactions by amount debited.
@@ -105,35 +144,24 @@ public class BankStatementProcessor
     public List<BankTransaction> topTenExpenditures()
     {
         List<BankTransaction> result = new ArrayList<>();
-        final int size = bankTransactions.size();
-        BankTransaction t;
-        
-        Collections.sort(bankTransactions);
 
-        if (bankTransactions.size() < 10) {
-            for (int i = 0; i < size; i++) {
-                if ((t = bankTransactions.get(i)).getAmount() >= 0.0d) break;
-                result.add(t);
-            }
-        } else {
-            for (int i = 0; i <= 10; i++) {
-                if ((t = bankTransactions.get(i)).getAmount() >= 0.0d) break;
-                result.add(t);
-            }
+        for (int i = 0; i < bankTransactions.size(); i++) {
+            if (i == 10)
+                break;
+            if (bankTransactions.get(i).getAmount() >= 0.0d) break;
+            result.add(bankTransactions.get(i));
         }
         
         return result;
     }
     
     /**
-     * Finds the category with the highest expenditure.
+     * Finds the category with the highest expenditure. If there are none, returns null;
      * 
-     * @return The category with the largest debit transaction.
+     * @return The category with the largest debit transaction. Null if there are no transactions of expenditures.
      */
     public String highestExpenseCategory()
     {
-        Collections.sort(bankTransactions);
-        
         if (bankTransactions.size() == 0 || bankTransactions.get(0).getAmount() >= 0.0d) {
             return null;
         }

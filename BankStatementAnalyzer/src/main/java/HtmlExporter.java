@@ -7,7 +7,7 @@ package src.main.java;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class HtmlExporter implements Exporter {
+public class HtmlExporter implements BankStatementExporter {
     @Override
     public String export(final SummaryStatistics summaryStatistics) {
         String result = "<!doctype html>";

@@ -1,5 +1,7 @@
 package src.main.java;
 
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * This project is an implementation of the practice project from chapter 2 of
@@ -17,6 +19,22 @@ public class BankStatementApplication
         final BankStatementAnalyzer bankStatementAnalyzer = new BankStatementAnalyzer();
         final BankStatementParser bankStatementParser = new BankStatementCSVParser();
         
-        bankStatementAnalyzer.analyze(args[0], bankStatementParser);
+        final SummaryStatistics results = bankStatementAnalyzer.analyze(args[0], bankStatementParser);
+        
+        System.out.println("The sum is: " + results.getSum());
+        System.out.println("The max is: " + results.getMax());
+        System.out.println("The min is: " + results.getMin());
+        System.out.println("The avg is: " + results.getAverage());
+        
+        final BankStatementExporter htmlExporter  = new HtmlExporter();
+        System.out.println("The html is: " + htmlExporter.export(results));
+        
+        try {
+            final FileWriter htmlOutput = new FileWriter("BankStatementReport.html");
+            htmlOutput.write(htmlExporter.export(results));
+            htmlOutput.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 }
