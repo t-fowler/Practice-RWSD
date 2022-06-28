@@ -2,6 +2,7 @@ package src.main.java;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -15,10 +16,24 @@ public class BankStatementCSVParser implements BankStatementParser
 {
     private static final DateTimeFormatter DATE_PATTERN 
         = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        
+    private static Logger errorLogger = Logger.getLogger("main.java.parser.csv");
+    
     
     public BankTransaction parseFrom(final String line)
     {
         final String[] columns = line.split(",");
+        
+        ParserNotification errors
+            = new StatementValidator(columns[0], columns[1], columns[2], DATE_PATTERN)
+            .validate();
+            
+        if (errors.hasError()) {
+            for (String error : errors.getErrors()) {
+                errorLogger.warning(error);
+            }
+            return null;
+        }
         
         final LocalDate date = LocalDate.parse(columns[0], DATE_PATTERN);
         final double amount = Double.parseDouble(columns[1]);
@@ -32,7 +47,10 @@ public class BankStatementCSVParser implements BankStatementParser
     {
         List<BankTransaction> transactions = new ArrayList<>();
         for (String line: lines) {
-            transactions.add(parseFrom(line));
+            BankTransaction transaction = parseFrom(line);
+            if (transaction != null) {
+                transactions.add(transaction);
+            }
         }
         
         return transactions;

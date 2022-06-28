@@ -1,6 +1,7 @@
 package src.main.java;
 
 import java.util.List;
+import java.util.logging.*;
 /**
  * An interface providing the functionality to parse a bank statement.
  *

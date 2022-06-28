@@ -22,11 +22,10 @@ public class BankStatementAnalyzer
     public SummaryStatistics analyze(final String filename, final BankStatementParser parser) throws java.io.IOException
     {   
         BankStatementProcessor statement 
-        = new BankStatementProcessor(
+            = new BankStatementProcessor(
             parser.parseLinesFrom(
             Files.readAllLines(
-            Paths.get(RESOURCES + filename)
-            )));
+            Paths.get(RESOURCES + filename))));
         
         double sum = statement.calculateTotalProfit();
         double max = statement.maxTransaction().getAmount();

@@ -2,6 +2,7 @@ package src.main.java;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 /**
  * Write a description of class Validator here.
@@ -15,15 +16,20 @@ public class StatementValidator
     private String description;
     private String amount;
     private String date;
+    private DateTimeFormatter dateFormatter;
 
     /**
      * Constructor for objects of class Validator
      */
-    public StatementValidator(final String date, final String amount, final String description)
+    public StatementValidator(final String date,
+                                final String amount, 
+                                final String description, 
+                                final DateTimeFormatter dateFormatter)
     {
         this.description = Objects.requireNonNull(description);
         this.amount = Objects.requireNonNull(amount);
         this.date = Objects.requireNonNull(date);
+        this.dateFormatter = dateFormatter;
     }
 
     /**
@@ -41,13 +47,13 @@ public class StatementValidator
         
         final LocalDate parsedDate;
         try {
-            parsedDate = LocalDate.parse(this.date);
+            parsedDate = LocalDate.parse(this.date, dateFormatter);
             if (parsedDate.isAfter(LocalDate.now())) {
                 notification.addError("The date is in the future");
             }
         } catch (DateTimeParseException e)
         {
-            notification.addError("The date format is incorrect");
+            notification.addError("The date format is incorrect: " + "*" + this.date + "*");
         }
         
         double parsedAmount;
