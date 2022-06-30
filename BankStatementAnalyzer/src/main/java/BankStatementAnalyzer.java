@@ -3,7 +3,6 @@ package src.main.java;
 import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.Path;
 import java.time.Month;
 /**
  * Reads the given file, the format of which must be consistent with what is expected by the given parser.
