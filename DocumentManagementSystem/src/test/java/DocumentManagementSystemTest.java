@@ -23,6 +23,7 @@ public class DocumentManagementSystemTest
     private static final String REPORT = RESOURCES + "patient.report";
     private static final String XRAY = RESOURCES + "xray.jpg";
     private static final String INVOICE = RESOURCES + "patient.invoice";
+    private static final String PRESCRIPTION = RESOURCES + "patient.prescription";
     private static final String JOE_BLOGGS = "Joe Bloggs";
 
 // end::eg_constants[]
@@ -94,6 +95,21 @@ public class DocumentManagementSystemTest
         assertAttributeEquals(document, PATIENT, JOE_BLOGGS);
         assertAttributeEquals(document, AMOUNT, "$100");
         assertTypeIs("INVOICE", document);
+    }
+    
+    @Test
+    public void shouldImportPrescriptionAttributes() throws Exception
+    {
+        system.importFile(PRESCRIPTION);
+        
+        final Document document = onlyDocument();
+        
+        assertAttributeEquals(document, PATIENT, JOE_BLOGGS);
+        assertAttributeEquals(document, DATE, "April 14th, 2020");
+        assertAttributeEquals(document, DRUG, "Pain Killer");
+        assertAttributeEquals(document, AMOUNT, "5mgs");
+        assertAttributeEquals(document, CONDITION, "No more than twice per day.");
+        assertTypeIs("PRESCRIPTION", document);
     }
 
     @Test
