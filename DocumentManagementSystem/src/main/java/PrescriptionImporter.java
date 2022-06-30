@@ -2,6 +2,7 @@ package src.main.java;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import static src.main.java.Attributes.*;
 
@@ -24,6 +25,8 @@ public class PrescriptionImporter implements Importer
         textFile.addLineSuffix(AMOUNT + ": ", AMOUNT);
         textFile.addLineSuffix(CONDITION + ": ", CONDITION);
         
-        return new Document(textFile.getAttributes());
+        final Map<String, String> attributes = textFile.getAttributes();
+        attributes.put(TYPE, "PRESCRIPTION");
+        return new Document(attributes);
     }
 }

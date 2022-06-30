@@ -18,6 +18,7 @@ public class DocumentManagementSystem {
         extensionToImporter.put("letter", new LetterImporter());
         extensionToImporter.put("report", new ReportImporter());
         extensionToImporter.put("jpg", new ImageImporter());
+        extensionToImporter.put("prescription", new PrescriptionImporter());
     }
     // end::importer_lookup[]
     {
