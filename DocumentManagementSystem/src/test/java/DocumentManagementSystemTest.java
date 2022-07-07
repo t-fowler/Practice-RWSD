@@ -1,6 +1,5 @@
 package src.test.java;
 
-
 import org.junit.Test;
 
 import java.io.File;
@@ -14,7 +13,9 @@ import static org.junit.Assert.assertThat;
 import src.main.java.*;
 import static src.main.java.Attributes.*;
 
-// tag::eg_constants[]
+/**
+ * Test class for the document management system.
+ */
 public class DocumentManagementSystemTest
 {
     private static final String RESOURCES =
@@ -26,11 +27,12 @@ public class DocumentManagementSystemTest
     private static final String PRESCRIPTION = RESOURCES + "patient.prescription";
     private static final String JOE_BLOGGS = "Joe Bloggs";
 
-// end::eg_constants[]
 
     private DocumentManagementSystem system = new DocumentManagementSystem();
 
-    // tag::shouldImportFile[]
+    /**
+     * Test for importing a file.
+     */
     @Test
     public void shouldImportFile() throws Exception
     {
@@ -40,9 +42,10 @@ public class DocumentManagementSystemTest
 
         assertAttributeEquals(document, Attributes.PATH, LETTER);
     }
-    // end::shouldImportFile[]
 
-    // tag::shouldImportLetterAttributes[]
+    /**
+     * Test for properly importing a letter file.
+     */
     @Test
     public void shouldImportLetterAttributes() throws Exception
     {
@@ -61,8 +64,10 @@ public class DocumentManagementSystemTest
             "with Dr. Avaj from 29th December 2016 to 5th January 2017.");
         assertTypeIs("LETTER", document);
     }
-    // end::shouldImportLetterAttributes[]
 
+    /**
+     * Test for properly importing a report file.
+     */
     @Test
     public void shouldImportReportAttributes() throws Exception
     {
@@ -71,7 +76,9 @@ public class DocumentManagementSystemTest
         assertIsReport(onlyDocument());
     }
 
-    // tag::shouldImportImageAttributes[]
+    /**
+     * test for properly importing an image file.
+     */
     @Test
     public void shouldImportImageAttributes() throws Exception
     {
@@ -83,8 +90,10 @@ public class DocumentManagementSystemTest
         assertAttributeEquals(document, HEIGHT, "179");
         assertTypeIs("IMAGE", document);
     }
-    // end::shouldImportImageAttributes[]
 
+    /**
+     * Test for properly importing an invoice file.
+     */
     @Test
     public void shouldImportInvoiceAttributes() throws Exception
     {
@@ -97,6 +106,9 @@ public class DocumentManagementSystemTest
         assertTypeIs("INVOICE", document);
     }
     
+    /**
+     * Test for properly importing a prescription file.
+     */
     @Test
     public void shouldImportPrescriptionAttributes() throws Exception
     {
@@ -112,6 +124,9 @@ public class DocumentManagementSystemTest
         assertTypeIs("PRESCRIPTION", document);
     }
 
+    /**
+     * Test for querying the attributes of a file.
+     */
     @Test
     public void shouldBeAbleToSearchFilesByAttributes() throws Exception
     {
@@ -125,20 +140,27 @@ public class DocumentManagementSystemTest
         assertIsReport(documents.get(0));
     }
 
-    // tag::errorTests[]
+    /**
+     * Test that the system throws an error on a missing file.
+     */
     @Test(expected = FileNotFoundException.class)
     public void shouldNotImportMissingFile() throws Exception
     {
         system.importFile("gobbledygook.txt");
     }
 
+    /**
+     * Test that the system throws an error on an unsupported file type.
+     */
     @Test(expected = UnknownFileTypeException.class)
     public void shouldNotImportUnknownFile() throws Exception
     {
         system.importFile(RESOURCES + "unknown.txt");
     }
-    // end::errorTests[]
 
+    /**
+     * Checks that reports are correctly identified.
+     */
     private void assertIsReport(final Document document)
     {
         assertAttributeEquals(document, PATIENT, JOE_BLOGGS);
@@ -149,7 +171,10 @@ public class DocumentManagementSystemTest
         assertTypeIs("REPORT", document);
     }
 
-    // tag::assertAttributeEquals[]
+    /**
+     * Compares an attribute of a document against an expected value. Throws an error
+     * if they do not have the same value.
+     */
     private void assertAttributeEquals(
         final Document document,
         final String attributeName,
@@ -160,19 +185,25 @@ public class DocumentManagementSystemTest
             expectedValue,
             document.getAttribute(attributeName));
     }
-    // end::assertAttributeEquals[]
 
+    /**
+     * Checks whether the TYPE of documents are correct.
+     */
     private void assertTypeIs(final String type, final Document document)
     {
         assertAttributeEquals(document, TYPE, type);
     }
 
-    // tag::onlyDocument[]
+    /**
+     * Throws an error if the system contains for than one document. Otherwise, returns the
+     * only document.
+     * 
+     * @return The only document in the system.
+     */
     private Document onlyDocument()
     {
         final List<Document> documents = system.contents();
         assertThat(documents, hasSize(1));
         return documents.get(0);
     }
-    // end::onlyDocument[]
 }
