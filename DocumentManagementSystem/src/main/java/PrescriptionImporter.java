@@ -7,13 +7,20 @@ import java.util.Map;
 import static src.main.java.Attributes.*;
 
 /**
- * Write a description of class PrescriptionImporter here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * An importer for prescription record files to the document management system.
  */
 public class PrescriptionImporter implements Importer
 {
+    /**
+     * Creates a document with PATIENT, DRUG, DATE, AMOUNT, CONDITION, 
+     * and TYPE attributes from the given jpg file.
+     * 
+     * @param file The prescription file to be imported.
+     * 
+     * @throws IOException An text file read error.
+     * 
+     * @return A document created from the file.
+     */
     @Override
     public Document importFile(final File file) throws IOException
     {

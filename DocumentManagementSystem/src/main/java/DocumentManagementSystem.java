@@ -8,24 +8,33 @@ import java.util.stream.Collectors;
 
 import static java.util.Collections.unmodifiableList;
 
+/**
+ * This document management system is found in _Real World Software Development_ and
+ * was intended to induce learning concepts such as importing multiple file types,
+ * the Liskov Substitution Principle, and object oriented program design (via inheritance).
+ */
 public class DocumentManagementSystem {
     private final List<Document> documents = new ArrayList<>();
-    private final List<Document> documentsView = unmodifiableList(documents);
-    // tag::importer_lookup[]
-    private final Map<String, Importer> extensionToImporter = new HashMap<>();
+    private final Map<String, Importer> extensionToImporter = new HashMap<>();  // Links file extention to the associated importer.
 
     public DocumentManagementSystem() {
         extensionToImporter.put("letter", new LetterImporter());
         extensionToImporter.put("report", new ReportImporter());
         extensionToImporter.put("jpg", new ImageImporter());
         extensionToImporter.put("prescription", new PrescriptionImporter());
-    }
-    // end::importer_lookup[]
-    {
         extensionToImporter.put("invoice", new InvoiceImporter());
     }
 
-    // tag::importFile[]
+    /**
+     * Attempts to open the file at the given path, throwing an IOException when this is not possible.
+     * After opening, importFile calls the proper importer function and adds the document to the
+     * management system.
+     * 
+     * @param path The path to the file.
+     * 
+     * @throws FileNotFoundException The file given by the path does not exist.
+     * @throws UnknownFileTypeException The file given by path either is not a supported file type, or the path is incorrect.
+     */
     public void importFile(final String path) throws IOException {
         final File file = new File(path);
         if (!file.exists()) {
@@ -49,12 +58,26 @@ public class DocumentManagementSystem {
             throw new UnknownFileTypeException("No extension found For file: " + path);
         }
     }
-    // end::importFile[]
 
+    /**
+     * Returns a list of all the documents in the management system.
+     * 
+     * @return The list of documents.
+     */
     public List<Document> contents() {
-        return documentsView;
+        return documents;
     }
 
+    /**
+     * Finds all the documents that match the provided query string. Queries are formatted such that
+     * constraints are separated by commas and consist of pairs of attributes and values separated by
+     * colons. So, "patient:Joe Bloggs,body:Diet coke" would search for documents concerning Joe Bloggs
+     * with "Diet coke" in the contents.
+     * 
+     * @param query The query string should be formatted by the rules given above.
+     * 
+     * @return A list of documents that satisfy the constraints of the query.
+     */
     public List<Document> search(final String query) {
         return documents.stream()
                         .filter(Query.parse(query))

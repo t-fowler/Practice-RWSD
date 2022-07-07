@@ -7,10 +7,22 @@ import java.util.Map;
 
 import static src.main.java.Attributes.*;
 
+/**
+ * An importer for text letters to the document management system.
+ */
 class LetterImporter implements Importer {
     private static final String NAME_PREFIX = "Dear ";
 
-    // tag::importFile[]
+    /**
+     * Creates a document with PATIENT, ADDRESS, BODY, and TYPE attributes 
+     * from the given invoice file.
+     * 
+     * @param file The letter to be imported.
+     * 
+     * @throws IOException A text file read error.
+     * 
+     * @return A document created from the file.
+     */
     @Override
     public Document importFile(final File file) throws IOException {
         final TextFile textFile = new TextFile(file);
@@ -24,5 +36,4 @@ class LetterImporter implements Importer {
         attributes.put(TYPE, "LETTER");
         return new Document(attributes);
     }
-    // end::importFile[]
 }
