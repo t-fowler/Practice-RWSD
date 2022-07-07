@@ -72,6 +72,13 @@ class TextFile {
         return lineNumber;
     }
 
+    /**
+     * Adds what comes after the given prefix--the first time it appears in a text file--as a value
+     * to an attribute with the given attribute name.
+     * 
+     * @param prefix The start of the line for which the suffix will be added as an attribute value.
+     * @param attributeName The name of the attribute to add the suffix.
+     */
     void addLineSuffix(final String prefix, final String attributeName) {
         for(final String line: lines) {
             if (line.startsWith(prefix)) {
