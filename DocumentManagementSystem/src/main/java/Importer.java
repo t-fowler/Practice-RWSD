@@ -15,7 +15,6 @@ interface Importer {
      * attributes.
      * 
      * @param file The file to be imported.
-     * 
      * @throws IOException Indicates a failed import.
      */
     Document importFile(File file) throws IOException;

@@ -18,9 +18,7 @@ class ImageImporter implements Importer {
      * jpg file.
      * 
      * @param file The jpg file to be imported.
-     * 
      * @throws IOException An image read error.
-     * 
      * @return A document created from the file.
      */
     @Override

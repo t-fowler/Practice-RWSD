@@ -24,7 +24,6 @@ public class Document {
      * Returns the value associated to the given attribute for the document.
      * 
      * @param attributeName The attribute for which to return a value.
-     * 
      * @return The value associated with the given attribute.
      */
     public String getAttribute(final String attributeName) {

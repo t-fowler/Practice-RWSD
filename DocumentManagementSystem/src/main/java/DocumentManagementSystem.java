@@ -31,7 +31,6 @@ public class DocumentManagementSystem {
      * management system.
      * 
      * @param path The path to the file.
-     * 
      * @throws FileNotFoundException The file given by the path does not exist.
      * @throws UnknownFileTypeException The file given by path either is not a supported file type, or the path is incorrect.
      */
@@ -75,7 +74,6 @@ public class DocumentManagementSystem {
      * with "Diet coke" in the contents.
      * 
      * @param query The query string should be formatted by the rules given above.
-     * 
      * @return A list of documents that satisfy the constraints of the query.
      */
     public List<Document> search(final String query) {

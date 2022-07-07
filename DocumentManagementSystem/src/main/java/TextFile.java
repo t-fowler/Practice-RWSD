@@ -49,7 +49,6 @@ class TextFile {
      * @param start The line number to start on.
      * @param isEnd A predicate where isEnd.test(line) determines whether line is the end line.
      * @param attributeName The name of the attribute for which the lines will be a value.
-     * 
      * @return The line number of the final line added to the attribute.
      */
     int addLines(

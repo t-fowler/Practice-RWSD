@@ -16,9 +16,7 @@ public class PrescriptionImporter implements Importer
      * and TYPE attributes from the given jpg file.
      * 
      * @param file The prescription file to be imported.
-     * 
      * @throws IOException An text file read error.
-     * 
      * @return A document created from the file.
      */
     @Override

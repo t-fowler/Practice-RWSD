@@ -19,9 +19,7 @@ class ReportImporter implements Importer {
      * from the given invoice file.
      * 
      * @param file The report file to be imported.
-     * 
      * @throws IOException A text file read error.
-     * 
      * @return A document created from the file.
      */
     @Override

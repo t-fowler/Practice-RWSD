@@ -1,6 +1,5 @@
 package src.main.java;
 
-
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -21,7 +20,6 @@ class Query implements Predicate<Document> {
      * compare with Documents.
      * 
      * @param query The query string formatted as described above.
-     * 
      * @return A Query for testing documents against the given query string.
      */
     static Query parse(final String query) {
@@ -47,7 +45,6 @@ class Query implements Predicate<Document> {
      * then the test is positive.
      * 
      * @param document The document to test agains the query.
-     * 
      * @return True/false whether the document matches the query.
      */
     @Override
