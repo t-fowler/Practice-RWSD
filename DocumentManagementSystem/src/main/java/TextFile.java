@@ -1,6 +1,5 @@
 package src.main.java;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,25 +11,47 @@ import java.util.function.Predicate;
 import static src.main.java.Attributes.PATH;
 import static java.util.stream.Collectors.toList;
 
-// tag::classDefinition[]
+/**
+ * A domain class for manipulating the contents of text files. Allows for different types
+ * of text files to be used and groups all the relevant behaviours in this class. It is
+ * not a subclass of Document because documents are not restricted to text files only; this
+ * would violate the Liskov Substitution Principle.
+ */
 class TextFile {
     private final Map<String, String> attributes;
     private final List<String> lines;
 
-    // class continues ...
-// end::classDefinition[]
-
+    /**
+     * Constructor for a text file.
+     * 
+     * @param file The text file to import
+     */
     TextFile(final File file) throws IOException {
         attributes = new HashMap<>();
         attributes.put(PATH, file.getPath());
         lines = Files.lines(file.toPath()).collect(toList());
     }
 
+    /**
+     * Returns the attributes associated with this text file.
+     * 
+     * @return The attribute to value mapping for the file.
+     */
     Map<String, String> getAttributes() {
         return attributes;
     }
 
-    // tag::addLines[]
+    /**
+     * Parses the file line by line starting from a given line number. Combines the lines
+     * and adds them as an attribute. The user can define an end line so that cuts off the
+     * parsing.
+     * 
+     * @param start The line number to start on.
+     * @param isEnd A predicate where isEnd.test(line) determines whether line is the end line.
+     * @param attributeName The name of the attribute for which the lines will be a value.
+     * 
+     * @return The line number of the final line added to the attribute.
+     */
     int addLines(
         final int start,
         final Predicate<String> isEnd,
@@ -50,9 +71,7 @@ class TextFile {
         attributes.put(attributeName, accumulator.toString().trim());
         return lineNumber;
     }
-    // end::addLines[]
 
-    // tag::addLineSuffix[]
     void addLineSuffix(final String prefix, final String attributeName) {
         for(final String line: lines) {
             if (line.startsWith(prefix)) {
@@ -61,5 +80,4 @@ class TextFile {
             }
         }
     }
-    // end::addLineSuffix[]
 }

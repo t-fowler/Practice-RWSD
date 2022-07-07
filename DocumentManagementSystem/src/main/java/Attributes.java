@@ -1,6 +1,9 @@
 package src.main.java;
 
-
+/**
+ * Constants for all of the attribute names used by the document management system.
+ * Constants are used to maintain consistency in all cases where attributes are used.
+ */
 public final class Attributes
 {
     public static final String PATH = "path";
