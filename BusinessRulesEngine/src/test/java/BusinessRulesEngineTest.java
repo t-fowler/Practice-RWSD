@@ -35,8 +35,8 @@ public class BusinessRulesEngineTest
         
         rulesEngine.addRule(whenBankrupt
             .then(facts -> facts.addFact("CFO", "Fired")));
-        rulesEngine.addRule(facts -> whenBankrupt
-            .then(facts2 -> facts2.addFact("Assets", "Sell")));
+        rulesEngine.addRule(whenBankrupt
+            .then(facts -> facts.addFact("Assets", "Sell")));
             
         assertEquals(2, rulesEngine.count());
     }
@@ -56,5 +56,30 @@ public class BusinessRulesEngineTest
         rulesEngine.run();
         
         verify(mockRule).perform(mockFacts);
+    }
+    
+    /**
+     * Tests that the banckrupt example rule adds two facts to the environment of the
+     * rules engine.
+     */
+    @Test
+    public void shouldAddTwoFactsToEnvironment() {
+        final Facts bankrupt = new Facts();
+        bankrupt.addFact("BankAccount", "-1500000000");
+        
+        final BusinessRulesEngine rulesEngine = new BusinessRulesEngine(bankrupt);
+        
+        final RuleBuilder whenBankrupt = RuleBuilder
+            .when(facts -> Integer.parseInt(facts.getFact("BankAccount")) < 0);
+            
+        rulesEngine.addRule(whenBankrupt
+            .then(facts -> facts.addFact("CFO", "Fired")));
+        rulesEngine.addRule(whenBankrupt
+            .then(facts -> facts.addFact("Assets", "Sell")));
+            
+        rulesEngine.run();
+            
+        assertEquals("Fired", rulesEngine.getFacts().getFact("CFO"));
+        assertEquals("Sell", rulesEngine.getFacts().getFact("Assets"));
     }
 }
