@@ -8,61 +8,53 @@ import static org.mockito.Mockito.*;
 import src.main.java.*;
 
 /**
- * 
+ * A test class for the business rules engine. 
  */
 public class BusinessRulesEngineTest
 {
     /**
-     * 
+     * Tests that a rules engine is constructed with no Rules initially.
      */
     @Test
     public void shouldHaveNoRulesInitially() throws Exception
     {
-        final BusinessRulesEngine rulesEngine = new BusinessRulesEngine();
+        final BusinessRulesEngine rulesEngine = new BusinessRulesEngine(new Facts());
         
         assertEquals(0, rulesEngine.count());
     }
     
     /**
-     * 
+     * Tests that adding rules to the rules engine works.
      */
     @Test
-    public void shouldAddTwoActions() throws Exception
+    public void shouldAddTwoRules() throws Exception
     {
-        final BusinessRulesEngine rulesEngine = new BusinessRulesEngine();
+        final BusinessRulesEngine rulesEngine = new BusinessRulesEngine(new Facts());
+        final RuleBuilder whenBankrupt = RuleBuilder
+            .when(facts -> Integer.parseInt(facts.getFact("BankAccount")) < 0);
         
-        rulesEngine.addAction(() -> {});
-        rulesEngine.addAction(() -> {});
+        rulesEngine.addRule(whenBankrupt
+            .then(facts -> facts.addFact("CFO", "Fired")));
+        rulesEngine.addRule(facts -> whenBankrupt
+            .then(facts2 -> facts2.addFact("Assets", "Sell")));
+            
         assertEquals(2, rulesEngine.count());
     }
     
     /**
-     * 
+     * Creates a mock set of facts and rules and confirms that a rule is performed
+     * correctly. 
      */
     @Test
-    public void shouldExecuteOneAction() throws Exception
+    public void shouldExecuteOneRule() throws Exception
     {
-        final BusinessRulesEngine rulesEngine = new BusinessRulesEngine();
-        final Action mockAction = mock(Action.class);
-        
-        rulesEngine.addAction(mockAction);
-        rulesEngine.run();
-        
-        verify(mockAction).execute();
-    }
-    
-    /**
-     * 
-     */
-    @Test
-    public void shouldExecuteActionWithFacts() {
-        final Action mockAction = mock(Action.class);
         final Facts mockFacts = mock(Facts.class);
+        final Rule mockRule = mock(Rule.class);
         final BusinessRulesEngine rulesEngine = new BusinessRulesEngine(mockFacts);
         
-        rulesEngine.addAction(mockAction);
+        rulesEngine.addRule(mockRule);
         rulesEngine.run();
         
-        verify(mockAction).execute(mockFacts);
+        verify(mockRule).perform(mockFacts);
     }
 }
