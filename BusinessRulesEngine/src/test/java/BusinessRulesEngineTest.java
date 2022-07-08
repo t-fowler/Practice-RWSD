@@ -42,6 +42,35 @@ public class BusinessRulesEngineTest
     }
     
     /**
+     * Tests that NamedRules are created properly and that the 
+     * BusinessRulesEngine accepts them properly.
+     */
+    @Test
+    public void shouldAddTwoRulesWithNames() throws Exception
+    {
+        final BusinessRulesEngine rulesEngine = new BusinessRulesEngine(new Facts());
+        final NamedRuleBuilder whenBankrupt = NamedRuleBuilder
+            .when(facts -> Integer.parseInt(facts.getFact("BankAccount")) < 0);
+        
+        NamedRule malpractice = whenBankrupt
+            .then(facts -> facts.addFact("CFO", "Fired"))
+            .named("Malpractice", "An employee is being fired due to malpractice.");
+        NamedRule sellOff = whenBankrupt
+            .then(facts -> facts.addFact("Assets", "Sell"))
+            .named("SellOff", "The company is forced to sell off assets to avoid going bankrupt.");
+            
+        assertEquals("Malpractice", malpractice.getName());
+        assertEquals("An employee is being fired due to malpractice.", malpractice.getDescription());
+        assertEquals("SellOff", sellOff.getName());
+        assertEquals("The company is forced to sell off assets to avoid going bankrupt.", sellOff.getDescription());
+            
+        rulesEngine.addRule(malpractice);
+        rulesEngine.addRule(sellOff);
+            
+        assertEquals(2, rulesEngine.count());
+    }
+    
+    /**
      * Creates a mock set of facts and rules and confirms that a rule is performed
      * correctly. 
      */
