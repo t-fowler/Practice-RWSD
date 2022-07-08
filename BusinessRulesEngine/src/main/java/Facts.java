@@ -7,8 +7,24 @@ import java.util.HashMap;
  */
 public class Facts
 {
-    public final Map<String, String> facts = new HashMap<>();
+    public final Map<String, String> facts;
 
+    public Facts()
+    {
+        facts = new HashMap<>();
+    }
+    
+    /**
+     * Copy constructor for facts.
+     */
+    public Facts(Facts other)
+    {
+        this();
+        for (Map.Entry entry : other.facts.entrySet()) {
+            this.facts.put(entry.getKey().toString(), entry.getValue().toString());
+        }
+    }
+    
     /**
      * Returns the fact with the given name or null if there is no fact with that name.
      * 

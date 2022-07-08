@@ -45,4 +45,9 @@ public class BusinessRulesEngine
     {
         this.rules.forEach(rule -> rule.perform(facts));
     }
+    
+    public Facts getFacts()
+    {
+        return new Facts(this.facts);
+    }
 }
