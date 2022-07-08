@@ -9,7 +9,9 @@ package src.main.java;
 @FunctionalInterface
 public interface Action{
     /**
-     * TODO: Document
+     * Execute the action given a set of facts.
+     * 
+     * @param facts The set of facts.
      */
     void execute(Facts facts);
 }

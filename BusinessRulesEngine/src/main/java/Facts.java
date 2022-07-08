@@ -16,6 +16,8 @@ public class Facts
     
     /**
      * Copy constructor for facts.
+     * 
+     * @param other The Facts object to copy.
      */
     public Facts(Facts other)
     {
@@ -38,6 +40,9 @@ public class Facts
     
     /**
      * Adds a new fact to the list with the given name and value.
+     * 
+     * @param name The name of the fact.
+     * @param value The fact.
      */
     public void addFact(final String name, final String value)
     {
