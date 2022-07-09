@@ -1,5 +1,6 @@
 package src.main.java;
 
+import static src.main.java.BusinessRulesEngine.MIN_PRIORITY_LEVEL;
 /**
  * A simple rule which executes an action if a condition holds over a given set of facts.
  */
@@ -29,5 +30,21 @@ public class DefaultRule implements Rule
     {
         if (condition.evaluate(facts))
             action.execute(facts);
+    }
+    
+    public int priorityLevel()
+    {
+        return MIN_PRIORITY_LEVEL;
+    }
+    
+    /**
+     * Compares priority levels with another rule.
+     * 
+     * @param The Rule to compare against.
+     * @return Negative if this rule is higher priority, 0 if they are the same priority and positive if the other rule is higher priority.
+     */
+    public int compareTo(Rule otherRule)
+    {
+        return this.priorityLevel() - otherRule.priorityLevel();
     }
 }

@@ -2,21 +2,21 @@ package src.main.java;
 
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.Collections;
 /**
- * Write a description of class BusinessRulesEngine here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * The BusinessRulesEngine is a system for co-ordinating business policy with execution from
+ * software team. Users can add rules to the system which execute as actions under qualifying
+ * conditions are met.
  */
 public class BusinessRulesEngine
 {
+    public static int MIN_PRIORITY_LEVEL = 10;
     private List<Rule> rules;
     private Facts facts;
     /**
-     * The BusinessRulesEngine is a system for co-ordinating business policy with execution from
-     * software team. Users can add rules to the system which execute as actions under qualifying
-     * conditions are met.
+     * Constructor for the BusinessRulesEngine class. A base set of facts must be provided.
+     * 
+     * @param facts the base set of facts for the rules engine.
      */
     public BusinessRulesEngine(final Facts facts)
     {
@@ -32,6 +32,7 @@ public class BusinessRulesEngine
     public void addRule(final Rule rule)
     {
         this.rules.add(rule);
+        Collections.sort(this.rules);
     }
     
     /**
