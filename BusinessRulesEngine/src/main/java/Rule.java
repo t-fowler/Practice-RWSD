@@ -19,5 +19,11 @@ public interface Rule extends Comparable<Rule>
      */
     int priorityLevel();
     
+    /**
+     * Compares priority levels with another rule.
+     * 
+     * @param The Rule to compare against.
+     * @return Negative if this rule is higher priority, 0 if they are the same priority and positive if the other rule is higher priority.
+     */
     int compareTo(Rule otherRule);
 }

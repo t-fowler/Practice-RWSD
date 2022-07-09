@@ -32,6 +32,11 @@ public class DefaultRule implements Rule
             action.execute(facts);
     }
     
+    /**
+     * Returns the Rule's priority value.
+     * 
+     * @return The priority level of the Rule.
+     */
     public int priorityLevel()
     {
         return MIN_PRIORITY_LEVEL;
