@@ -58,10 +58,12 @@ public class BusinessRulesEngineTest
         
         EnhancedRule malpractice = whenBankrupt
             .then(facts -> facts.addFact("CFO", "Fired"))
-            .named("Malpractice", "An employee is being fired due to malpractice.");
+            .named("Malpractice", "An employee is being fired due to malpractice.")
+            .withPriority(0);
         EnhancedRule sellOff = whenBankrupt
             .then(facts -> facts.addFact("Assets", "Sell"))
-            .named("SellOff", "The company is forced to sell off assets to avoid going bankrupt.");
+            .named("SellOff", "The company is forced to sell off assets to avoid going bankrupt.")
+            .withPriority(0);
             
         assertEquals("Malpractice", malpractice.getName());
         assertEquals("An employee is being fired due to malpractice.", malpractice.getDescription());
@@ -114,7 +116,8 @@ public class BusinessRulesEngineTest
         final Rule enhancedRule = EnhancedRuleBuilder
             .when(conditions)
             .then(mockAction)
-            .named("Test", "A test rule.");
+            .named("Test", "A test rule.")
+            .withPriority(0);
         
         rulesEngine.addRule(enhancedRule);
         rulesEngine.run();
@@ -127,7 +130,8 @@ public class BusinessRulesEngineTest
      * rules engine.
      */
     @Test
-    public void shouldAddTwoFactsToEnvironment() {
+    public void shouldAddTwoFactsToEnvironment() throws Exception
+    {
         final Facts bankrupt = new Facts();
         bankrupt.addFact("BankAccount", "-1500000000");
         
@@ -145,5 +149,34 @@ public class BusinessRulesEngineTest
             
         assertEquals("Fired", rulesEngine.getFacts().getFact("CFO"));
         assertEquals("Sell", rulesEngine.getFacts().getFact("Assets"));
+    }
+    
+    /**
+     * Tests that higher priority rules are performed first.
+     */
+    @Test
+    public void shouldPerformHigherPriorityRuleFirst() throws Exception
+    {
+        final Facts bankrupt = new Facts();
+        bankrupt.addFact("BankAccount", "-1500000000");
+        
+        final BusinessRulesEngine rulesEngine = new BusinessRulesEngine(bankrupt);
+        final EnhancedRuleBuilder whenBankrupt = EnhancedRuleBuilder
+            .when(Arrays.asList(facts -> Integer.parseInt(facts.getFact("BankAccount")) < 0));
+        
+        EnhancedRule malpractice = whenBankrupt
+            .then(facts -> facts.addFact("CFO", "Fired"))
+            .named("Malpractice", "An employee is being fired due to malpractice.")
+            .withPriority(1);
+        EnhancedRule sellOff = whenBankrupt
+            .then(facts -> facts.addFact("CFO", "Scolded"))
+            .named("SellOff", "The company is forced to sell off assets to avoid going bankrupt.")
+            .withPriority(0);
+            
+        rulesEngine.addRule(malpractice);
+        rulesEngine.addRule(sellOff);
+        rulesEngine.run();
+            
+        assertEquals("Fired", rulesEngine.getFacts().getFact("CFO"));
     }
 }
