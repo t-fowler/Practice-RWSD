@@ -5,6 +5,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+
 import src.main.java.*;
 
 /**
@@ -42,20 +46,20 @@ public class BusinessRulesEngineTest
     }
     
     /**
-     * Tests that NamedRules are created properly and that the 
+     * Tests that EnhancedRules with names are created properly and that the 
      * BusinessRulesEngine accepts them properly.
      */
     @Test
     public void shouldAddTwoRulesWithNames() throws Exception
     {
         final BusinessRulesEngine rulesEngine = new BusinessRulesEngine(new Facts());
-        final NamedRuleBuilder whenBankrupt = NamedRuleBuilder
-            .when(facts -> Integer.parseInt(facts.getFact("BankAccount")) < 0);
+        final EnhancedRuleBuilder whenBankrupt = EnhancedRuleBuilder
+            .when(Arrays.asList(facts -> Integer.parseInt(facts.getFact("BankAccount")) < 0));
         
-        NamedRule malpractice = whenBankrupt
+        EnhancedRule malpractice = whenBankrupt
             .then(facts -> facts.addFact("CFO", "Fired"))
             .named("Malpractice", "An employee is being fired due to malpractice.");
-        NamedRule sellOff = whenBankrupt
+        EnhancedRule sellOff = whenBankrupt
             .then(facts -> facts.addFact("Assets", "Sell"))
             .named("SellOff", "The company is forced to sell off assets to avoid going bankrupt.");
             
@@ -85,6 +89,37 @@ public class BusinessRulesEngineTest
         rulesEngine.run();
         
         verify(mockRule).perform(mockFacts);
+    }
+    
+    /**
+     * Verifies that the EnhancedRule class is working executing an action
+     * when a condition is positive.
+     */
+    @Test
+    public void shouldExecuteEnhancedRuleOnce() throws Exception
+    {
+        final Facts factEnvironment = new Facts();
+        factEnvironment.addFact("One", "1");
+        factEnvironment.addFact("Two", "2");
+        
+        final BusinessRulesEngine rulesEngine = new BusinessRulesEngine(factEnvironment);
+    
+        final Action mockAction = mock(Action.class);
+        final List<Condition> conditions = new ArrayList<>();
+        conditions.add(facts -> facts.getFact("One") == "1");
+        conditions.add(facts -> facts.getFact("Two") == "2");
+        conditions.add(facts -> facts.getFact("Three") == "3");
+        
+        
+        final Rule enhancedRule = EnhancedRuleBuilder
+            .when(conditions)
+            .then(mockAction)
+            .named("Test", "A test rule.");
+        
+        rulesEngine.addRule(enhancedRule);
+        rulesEngine.run();
+        
+        verify(mockAction).execute(factEnvironment);
     }
     
     /**
