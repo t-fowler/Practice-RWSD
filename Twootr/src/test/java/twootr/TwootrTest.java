@@ -106,7 +106,7 @@ public class TwootrTest
         otherEndPoint.onSendTwoot(id, TestData.TWOOT);
 
         //verify(twootRepository).add(id, TestData.OTHER_USER_ID, TestData.TWOOT);
-        verify(receiverEndPoint).onTwoot(new Twoot(id, TestData.OTHER_USER_ID, TestData.TWOOT, TestData.POSITION_1));
+        verify(receiverEndPoint).onReceiveTwoot(new Twoot(id, TestData.OTHER_USER_ID, TestData.TWOOT, TestData.POSITION_1));
     }
 
     /**
@@ -124,7 +124,7 @@ public class TwootrTest
 
         logon();
 
-        verify(receiverEndPoint).onTwoot(TestData.twootAt(id, TestData.POSITION_1));
+        verify(receiverEndPoint).onReceiveTwoot(TestData.twootAt(id, TestData.POSITION_1));
     }
     
     /**

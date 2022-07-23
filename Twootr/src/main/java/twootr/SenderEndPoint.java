@@ -2,10 +2,8 @@ package twootr;
 
 import java.util.Objects;
 /**
- * Write a description of class SenderEndPoint here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * Provides the API used by clients to send requests to the system. When a user logs on, the client
+ * provides its receiver endpoint is returned with a SenderEndPoint on a successful logon.
  */
 class SenderEndPoint
 {
@@ -13,7 +11,9 @@ class SenderEndPoint
     private final Twootr twootr;
 
     /**
-     * 
+     * Constructor for a SenderEndPoint.
+     * @param user The user associated with the endpoint. Must not be null.
+     * @param twootr The Twootr system. Must not be null.
      */
     SenderEndPoint(final User user, final Twootr twootr) {
         Objects.requireNonNull(user, "user");
@@ -24,7 +24,10 @@ class SenderEndPoint
     }
 
     /**
-     * 
+     * Requests the system to register user as following the user with the given ID.
+     *
+     * @param userIdToFollow The ID of the user to be followed. Must not be null.
+     * @return The result of the of the follow request.
      */
     public FollowStatus onFollow(final String userIdToFollow) {
         Objects.requireNonNull(userIdToFollow, "userIdToFollow");
@@ -33,7 +36,10 @@ class SenderEndPoint
     }
 
     /**
-     * 
+     * Requests the system to publish a twoot from this user.
+     *
+     * @param id The twoot ID.
+     * @param content The content of the twoot. Must not be null.
      */
     public void onSendTwoot(final String id, final String content) {
         Objects.requireNonNull(content, "content");
@@ -42,7 +48,7 @@ class SenderEndPoint
     }
 
     /**
-     * 
+     * Begins the user's log off procedure.
      */
     public void onLogoff() {
         user.onLogoff();

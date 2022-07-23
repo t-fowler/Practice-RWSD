@@ -10,10 +10,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Write a description of class Twootr here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * Twootr is a simple implementation of a mini-blogging platform. Users can register to publish
+ * short messages--called twoots--that are seen by followers of the user.
  */
 public class Twootr
 {
@@ -23,6 +21,9 @@ public class Twootr
     //private final UserRepository userRepository;
     //private final TwootRepository twootRepository;
 
+    /**
+     * Constructor for the Twootr object.
+     */
     public Twootr()
     {
         this.users = new HashSet<>();
@@ -38,9 +39,15 @@ public class Twootr
     */
 
     /**
-     * 
+     * Adds a new user to the system if the user is not already registered.
+     *
+     * @param userId The requested userID for the new user.
+     * @param password The user's requested password. Saved in a hashed/salted form.
+     * @return A RegistrationStatus indicating whether the user was successfully added
+     * or the user is a duplicate.
      */
-    public RegistrationStatus onRegisterUser(final String userId, final String password) {
+    public RegistrationStatus onRegisterUser(final String userId, final String password)
+    {
         byte[] salt = KeyGenerator.newSalt();
         byte[] hashedPassword = KeyGenerator.hash(password, salt);
         User user = new User(userId, hashedPassword, salt, Position.INITIAL_POSITION);
@@ -48,7 +55,13 @@ public class Twootr
     }
 
     /**
-     * 
+     * First authenticates the user by checking the provided password. Returns an optional
+     * SenderEndPoint if the log on was successfully performed.
+     *
+     * @param userId The provided userId.
+     * @param password The provided password.
+     * @param receiverEndPoint The GUI adapter for receiving push notifications from the Twootr system.
+     * @return An Optional SenderEndPoint object that the client can use 
      */
     Optional<SenderEndPoint> 
         onLogon(final String userId, final String password, final ReceiverEndPoint receiverEndPoint)
@@ -80,16 +93,19 @@ public class Twootr
     }
 
     /**
-     * 
+     * Adds the user to the follow list of otherUser if they are not already there.
+     *
+     * @param userId The Id of the user doing the following.
+     * @param otherUserId the ID of the user to be followed.
+     * @return A FollowStatus indicating success or the type of failure.
      */
     FollowStatus onFollow(final String userId, final String otherUserId)
     {
-        List<User> user = users.stream()
-            .filter(follower -> follower.getId() == userId)
+        List<User> user = this.users.stream()
+            .filter(follower -> follower.getId() == userId)  // Users must have unique ID's for this to work.
             .collect(Collectors.toList());
 
-        List<User> followedUser = users
-            .stream()
+        List<User> followedUser = users.stream()
             .filter(userToFollow -> userToFollow.getId() == otherUserId)
             .collect(Collectors.toList());
 
@@ -102,7 +118,12 @@ public class Twootr
     }
 
     /**
-     * 
+     * Pushes twoots from followed accounts out to users whey they log on. Only Twoots
+     * that appear later in the stream than the user's last seen twoot.
+     *
+     * @param id The twoot's unique id.
+     * @param user The user that is publishing a twoot.
+     * @param content The content of the Twoot.
      */
     void onSendTwoot(final String id, final User user, final String content)
     {
