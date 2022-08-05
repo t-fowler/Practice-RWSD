@@ -59,6 +59,27 @@ The concepts that <u> Real World Software Development </u> focuses on include:
     * #### Dependency inversion principle
         High and low level modules should not depend on each other. Instead, both should depend upon abstractions.
 
-        * 
+        * Dependencies can be instantiated using abstract factory methods that return an implementation.
+        * Or, dependencies can be "injected" throught the constructor of the high level object, giving responsibility of the dependencies to the user.
 
 * ### Testing
+    * #### Test-driven development
+            Make a test that fails -> Develop until test passes -> Run all tests to ensure correctness -> Make a test that fails -> ...
+
+        * Helps elicit a direction for development by having the developer write client code to describe what is needed next.
+        * Creates a test-suite that can be updated during development. This test-suite is invaluable to being able to have confidence in changes.
+        * Allows for writing simpler code because you only need to write enough to pass the test.
+
+    * #### JUnit
+        A popular testing framework for Java.
+        
+        * Unit tests test units of behaviour (methods or small classes).
+        * Assert statements:
+            * fail()
+            * assertEquals()
+            * assertNotNull()
+            * assertTrue()
+            * assertThat()
+    
+    * #### Mocking
+        
