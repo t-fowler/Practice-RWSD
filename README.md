@@ -5,35 +5,60 @@ This repository contains code that I wrote to practice the concepts from <u> Rea
 The concepts that <u> Real World Software Development </u> focuses on include:
 
 * ### Java features
-
-    The book covered topics such as Java packagages, exceptions, lambda expressions, method references, and type inference.
+    * Packages
+    * Exceptions
+    * Lambda Expressions
+    * Method references
 
 * ### Software architecture and design
+    * Coupling / Cohesion
+    * Fluent API design
+    * Test-driven development
+    * Mocking
+    * Event-driven architectures
+    * Hexagonal architectures
+    * Notification pattern
+    * Builder pattern
+    * Dependency injection
+    * Streams
 
-    Some of the techniques explained in the book are concepts such as coupling/cohesion, fluent api design, event-driven architecures, and hexagonal architecures. A number of programming patterns are presented, including object-oriented patterns such as the Notification and Builder patterns, and functional programming patterns such as first-class functions and stream programming.
 
 * ### SOLID design principles
+    * #### Single responsibility principle
+        Units of code should be focused on a single task.
+    
+        * Ensures that there is only ever one reason for code to be modified.
+        * Discourages "god class" design where 
+        * Promotes high cohesion and loose coupling by encouraging code to be organized by functionality.
+        * High cohesion and low coupling makes reduces code duplication, increasing robustness, and making code more readable and maintainable.
 
-    These principles are featured throughout the book and are the focus of the various projects that each chapter undertakes.
-
-    * Single responsibility principle
+    * #### Open / Closed principle
+        Methods and classes should be open to extension, but closed to modification. 
         
-        The SRP states that units of code should be entirely focused on a single task. This ensures that there is only ever one reason for the code to be modified. This promotes high cohesion and loose coupling by encouraging code to be organized by function. High cohesion and low coupling lead to code that is more robuts, more easily readable and maintainable.
+        * Allows functionality to be extended without requiring changes to client code.
+        * In Java, behaviour is abstracted out into interfaces so that new behaviour can be extended on by providing a new implementation to the interface.
+            
 
-    * Open / Closed principle
+    * #### Liskov substitution principle
+        Subtypes should be interchangeable with their parent types.
 
-        The OCP encourages the use of abstraction in order to change the behaviour of a code unit without needing to modify it. Such code is said to be open to extension and closed to modification. By extending methods and classes, new functionality can be added without altering all the code that uses the old functionality.
+        * The subtype can only assume as much as the parent type in its precondition.
+        * The subtype must provide as much functionality as its parent type in its postcondition.
+        * Invariants of the parent type must be maintained by the subtype.
+        * External state must be modified by the subtype in the same way as the parent type.
+        * The subtype's methods and the parent type's methods must have contravariant parameter types.
+        * The subtype's methods and the parent type's methods must have covariant return types.
 
-    * Liskov substitution principle
+    * #### Interface segregation principle
+        Interfaces should provide the minimum set of functions required to be useful.
 
-        The LSP
+        * Smaller interfaces means less coupling and higher cohesion because the separated interfaces can evolve separetly.
+        * Larger interfaces provide more than users need, leading to unimplemented functions that can cause errors.
+        * Increases readability due to potentialy introducing more domain terminology.
 
-    * Interface segregation principle
+    * #### Dependency inversion principle
+        High and low level modules should not depend on each other. Instead, both should depend upon abstractions.
 
-        The ISP
-
-    * Dependency inversion principle
-
-        The DIP
+        * 
 
 * ### Testing
