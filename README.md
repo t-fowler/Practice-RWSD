@@ -82,4 +82,7 @@ The concepts that <u> Real World Software Development </u> focuses on include:
             * assertThat()
     
     * #### Mocking
-        
+        Mock objects can be used to verify that object methods are being called properly.
+
+        * The _Mockito_ library can be used create mock objects in an automated way.
+        * Then we can verify that a method has been called.
